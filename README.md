@@ -1,7 +1,7 @@
-# Reddbot - Telegram Reddcoin Tipbot.
- 
-#### Reddcoin crypto currency tipbot for [Telegram](https://telegram.org)
+# Telegram iDealCash Tipbot - 
 
+#### Forked from Telegram Reddcoin Tipbot.
+####  https://github.com/samgos/reddbot-telegram
 
 ## Dependencies 
 
@@ -10,12 +10,22 @@
 *  `pip3 install beautifulsoup4`
 *  `pip3 install python-telegram-bot --upgrade`
 
-* In order to run the tip-bot effectively, a Bitcoin-core based client is needed. For this git Reddcoin-Core is used , but any major alternate crypto-currency client could easily be incorperated. 
+* In order to run the tip-bot effectively, a Bitcoin-core based client is needed. For this idealcashd is used
 
 ## Setup
 
-* Download the git
-`git clone https://github.com/samgos/reddbot-telegram`
+* Install the deps
+* Install idealcashd to /usr/bin/idealcashd 
+* Run and exit program
+### NOTE if not using idealcashd compiled from the experimental branch of the github, you will have to provide the idealcash.conf file and place it manually in the ~/.idealcash/ directory.
+* edit the idealcash.conf file located at ~/.idealcash/idealcash.conf to contain the following:
+
+* `staking=0`
+* `enableaccounts=1`
+### Staking cannot be enabled while running for the tipbot.
+
+* Run idealcashd and let it start syncing
+
 
 * Setup a bot with the user @BotFather through PM on Telegram, after going through a setup you will be given a bot token. Edit the command.py file and replace the parameter 'BOT_TOKEN' with the one you just recieved. 
 
