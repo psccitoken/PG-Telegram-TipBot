@@ -18,7 +18,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 					level=logging.INFO)
 
 def commands(bot, update):
-	user = update.message.from_user.username 
+	user = update.message.from_user.username
 	bot.send_message(chat_id=update.message.chat_id, text="Initiating commands /tip & /withdraw have a specfic format,\n use them like so:" + "\n \n Parameters: \n <user> = target user to tip \n <amount> = amount of idealCash to utilise \n <address> = idealCash address to withdraw to \n \n Tipping format: \n /tip <user> <amount> \n \n Withdrawing format: \n /withdraw <address> <amount>")
 
 def help(bot, update):
@@ -47,7 +47,7 @@ def tip(bot,update):
 			bot.send_message(chat_id=update.message.chat_id, text="HODL.")
 		elif "@" in target:
 			target = target[1:]
-			user = update.message.from_user.username 
+			user = update.message.from_user.username
 			core = "/usr/bin/idealcashd"
 			result = subprocess.run([core,"getbalance",user],stdout=subprocess.PIPE)
 			balance = float((result.stdout.strip()).decode("utf-8"))
@@ -58,10 +58,10 @@ def tip(bot,update):
 				bot.send_message(chat_id=update.message.chat_id, text="You can't tip yourself!")
 			else:
 				balance = str(balance)
-				amount = str(amount) 
+				amount = str(amount)
 				tx = subprocess.run([core,"move",user,target,amount],stdout=subprocess.PIPE)
 				bot.send_message(chat_id=update.message.chat_id, text="@{0} tipped @{1} of {2} DEAL".format(user, target, amount))
-		else: 
+		else:
 			bot.send_message(chat_id=update.message.chat_id, text="Error that user is not applicable.")
 
 def balance(bot,update):
@@ -106,6 +106,20 @@ def hi(bot,update):
 def rain(bot,update):
   bot.send_message(chat_id=update.message.chat_id, text="Stake for a rainy day!")
 
+def price():
+	data = requests.get('https://icqbase.com/page/api?method=singleinfo&marketid=69').json()['return'][0]
+
+	satsPrice = data['lasttradeprice']
+	change = data['change']
+	volume24 = data['24BaseVolume']
+
+	priceInfo = '''\
+	Price: {0} BTC
+	Change: {1}%
+	24/Total Vol.: {2} BTC'''.format(satsPrice, change, volume24)
+
+	print priceInfo
+	bot.send_message(chat_id=update.message.chat_id, text=priceInfo)
 
 from telegram.ext import CommandHandler
 
@@ -132,6 +146,9 @@ dispatcher.add_handler(balance_handler)
 
 help_handler = CommandHandler('help', help)
 dispatcher.add_handler(help_handler)
+
+price_handler = CommandHandler('price', price)
+dispatcher.add_handler(price_handler)
 
 updater.start_polling()
 
