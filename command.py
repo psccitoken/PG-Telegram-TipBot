@@ -118,7 +118,6 @@ def price():
 	Change: {1}%
 	24/Total Vol.: {2} BTC'''.format(satsPrice, change, volume24)
 
-	print priceInfo
 	bot.send_message(chat_id=update.message.chat_id, text=priceInfo)
 
 from telegram.ext import CommandHandler
