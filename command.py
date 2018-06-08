@@ -106,7 +106,7 @@ def hi(bot,update):
 def rain(bot,update):
   bot.send_message(chat_id=update.message.chat_id, text="Stake for a rainy day!")
 
-def price():
+def price(bot,update):
 	data = requests.get('https://icqbase.com/page/api?method=singleinfo&marketid=69').json()['return'][0]
 
 	satsPrice = data['lasttradeprice']
